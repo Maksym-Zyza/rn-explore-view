@@ -21,7 +21,6 @@ const RegistrationScreen = () => {
     password: "",
     login: "",
   });
-  const [focus, setFocus] = useState();
   const [isShowPass, setIsShowPass] = useState(false);
 
   const handleChange = (key, value) => {
@@ -72,14 +71,14 @@ const RegistrationScreen = () => {
             <View style={[styles.innerContainer, styles.inputContainer]}>
               <Input
                 value={formState.login}
-                autofocus={focus === "login"}
+                autofocus={true}
                 placeholder="Логін"
                 onTextChange={(value) => handleChange("login", value)}
               />
 
               <Input
                 value={formState.email}
-                autofocus={focus === "email"}
+                autofocus={true}
                 placeholder="Адреса електронної пошти"
                 onTextChange={(value) => handleChange("email", value)}
               />
