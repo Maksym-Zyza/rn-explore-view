@@ -10,12 +10,12 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from "react-native";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
-import Plus from "../icons/Plus";
+import Plus from "../../icons/Plus";
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ goToLogin }) => {
   const [formState, setFormState] = useState({
     email: "",
     password: "",
@@ -35,11 +35,11 @@ const RegistrationScreen = () => {
   };
 
   const onLogin = () => {
-    console.log("loginData:", formState);
+    console.log("formData:", formState);
   };
 
   const onSignUp = () => {
-    console.log("signUp");
+    goToLogin();
   };
 
   const showButton = (
@@ -52,7 +52,7 @@ const RegistrationScreen = () => {
     <Pressable style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
       <>
         <Image
-          source={require("../../assets/main-img.png")}
+          source={require("../../../assets/main-img.png")}
           resizeMode="cover"
           style={styles.image}
         />
@@ -78,7 +78,7 @@ const RegistrationScreen = () => {
 
               <Input
                 value={formState.email}
-                autofocus={true}
+                autofocus={false}
                 placeholder="Адреса електронної пошти"
                 onTextChange={(value) => handleChange("email", value)}
               />
