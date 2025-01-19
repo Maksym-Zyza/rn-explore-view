@@ -20,7 +20,7 @@ const LoginScreen = ({ goToRegistration }) => {
     password: "",
     login: "",
   });
-  const [isShowPass, setIsShowPass] = useState(false);
+  const [isSecurePass, setIsSecurePass] = useState(true);
 
   const handleChange = (key, value) => {
     setFormState((prevState) => ({
@@ -38,7 +38,7 @@ const LoginScreen = ({ goToRegistration }) => {
   };
 
   const showButton = (
-    <TouchableOpacity onPress={() => setIsShowPass(!isShowPass)}>
+    <TouchableOpacity onPress={() => setIsSecurePass(!isSecurePass)}>
       <Text style={[styles.baseText, styles.passwordButtonText]}>Показати</Text>
     </TouchableOpacity>
   );
@@ -73,7 +73,7 @@ const LoginScreen = ({ goToRegistration }) => {
                 rightButton={showButton}
                 outerStyles={styles.passwordButton}
                 onTextChange={(value) => handleChange("password", value)}
-                secureTextEntry={isShowPass}
+                secureTextEntry={isSecurePass}
               />
             </View>
 
