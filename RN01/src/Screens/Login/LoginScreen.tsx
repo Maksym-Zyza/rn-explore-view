@@ -22,16 +22,20 @@ type FormState = {
 };
 
 type RootStackParamList = {
-  LoginScreen: FormState;
+  LoginScreen: {
+    formValues: FormState;
+    setIsAuth: (state: boolean) => void;
+  };
 };
 
 const LoginScreen = ({ navigation }) => {
   const { params } = useRoute<RouteProp<RootStackParamList, "LoginScreen">>();
+  const { setIsAuth, formValues } = params;
 
   const [formState, setFormState] = useState<FormState>({
-    email: params?.email || "",
-    password: params?.password || "",
-    login: params?.login || "",
+    email: formValues?.email || "",
+    password: formValues?.password || "",
+    login: formValues?.login || "",
   });
   const [isSecurePass, setIsSecurePass] = useState(true);
 
@@ -43,6 +47,8 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const onLogin = () => {
+    setIsAuth(true);
+    navigation.navigate("Posts", formState);
     console.log("formData:", formState);
   };
 

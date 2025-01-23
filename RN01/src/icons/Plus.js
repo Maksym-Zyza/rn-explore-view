@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { Circle, Path } from "react-native-svg";
 
-const SvgComponent = (props) => (
+const Plus = (props) => (
   <Svg xmlns="http://www.w3.org/2000/svg" fill="none" {...props}>
     <Circle cx={12.5} cy={12.5} r={12} fill="#fff" stroke="#FF6C00" />
     <Path
@@ -12,4 +12,4 @@ const SvgComponent = (props) => (
     />
   </Svg>
 );
-export default SvgComponent;
+export default Plus;
