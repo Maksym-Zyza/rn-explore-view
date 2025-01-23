@@ -15,19 +15,10 @@ import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
 import Plus from "../../icons/Plus";
 import { useRoute, RouteProp } from "@react-navigation/native";
-
-type FormState = {
-  email: string;
-  password: string;
-  login: string;
-};
-
-type RootStackParamList = {
-  LoginScreen: FormState;
-};
+import { FormState, RootStackParam } from "../../types/auth";
 
 const RegistrationScreen = ({ navigation }) => {
-  const { params } = useRoute<RouteProp<RootStackParamList, "LoginScreen">>();
+  const { params } = useRoute<RouteProp<RootStackParam, "LoginScreen">>();
 
   const [isSecurePass, setIsSecurePass] = useState(true);
   const [formState, setFormState] = useState<FormState>({

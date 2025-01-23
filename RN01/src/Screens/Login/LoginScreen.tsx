@@ -14,19 +14,7 @@ import {
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { RouteProp, useRoute } from "@react-navigation/native";
-
-type FormState = {
-  email: string;
-  password: string;
-  login: string;
-};
-
-type RootStackParamList = {
-  LoginScreen: {
-    formValues: FormState;
-    setIsAuth: (state: boolean) => void;
-  };
-};
+import { FormState, RootStackParamList } from "../../types/auth";
 
 const LoginScreen = ({ navigation }) => {
   const { params } = useRoute<RouteProp<RootStackParamList, "LoginScreen">>();
