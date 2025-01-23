@@ -14,14 +14,27 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
 import Plus from "../../icons/Plus";
+import { useRoute, RouteProp } from "@react-navigation/native";
 
-const RegistrationScreen = ({ goToLogin }) => {
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-    login: "",
-  });
+type FormState = {
+  email: string;
+  password: string;
+  login: string;
+};
+
+type RootStackParamList = {
+  LoginScreen: FormState;
+};
+
+const RegistrationScreen = ({ navigation }) => {
+  const { params } = useRoute<RouteProp<RootStackParamList, "LoginScreen">>();
+
   const [isSecurePass, setIsSecurePass] = useState(true);
+  const [formState, setFormState] = useState<FormState>({
+    email: params?.email || "",
+    password: params?.password || "",
+    login: params?.login || "",
+  });
 
   const handleChange = (key, value) => {
     setFormState((prevState) => ({
@@ -36,10 +49,6 @@ const RegistrationScreen = ({ goToLogin }) => {
 
   const onLogin = () => {
     console.log("formData:", formState);
-  };
-
-  const onSignUp = () => {
-    goToLogin();
   };
 
   const showButton = (
@@ -103,7 +112,9 @@ const RegistrationScreen = ({ goToLogin }) => {
               <View style={styles.signUpContainer}>
                 <Text style={[styles.baseText, styles.passwordButtonText]}>
                   Вже є акаунт?
-                  <TouchableWithoutFeedback onPress={onSignUp}>
+                  <TouchableWithoutFeedback
+                    onPress={() => navigation.navigate("Login", formState)}
+                  >
                     <Text style={styles.signUpText}> Увійти</Text>
                   </TouchableWithoutFeedback>
                 </Text>

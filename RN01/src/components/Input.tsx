@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { FC, ReactNode, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
-
 import { colors } from "../../styles/global";
 
-const Input = ({
+type InputProps = {
+  value: string;
+  onTextChange: (text: string) => void;
+  placeholder: string;
+  outerStyles?: object;
+  rightButton?: ReactNode;
+  autofocus?: boolean;
+  secureTextEntry?: boolean;
+  onBlur?: () => void;
+};
+
+const Input: FC<InputProps> = ({
   value,
   onTextChange,
   placeholder,
@@ -30,6 +40,7 @@ const Input = ({
   return (
     <View style={[styles.input, isFocused && styles.focused, outerStyles]}>
       <TextInput
+        key={secureTextEntry.toString()}
         value={value}
         autoFocus={autofocus}
         onChangeText={onTextChange}

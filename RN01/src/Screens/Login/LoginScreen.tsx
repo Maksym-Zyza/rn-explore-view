@@ -13,12 +13,25 @@ import {
 } from "react-native";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import { RouteProp, useRoute } from "@react-navigation/native";
 
-const LoginScreen = ({ goToRegistration }) => {
-  const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-    login: "",
+type FormState = {
+  email: string;
+  password: string;
+  login: string;
+};
+
+type RootStackParamList = {
+  LoginScreen: FormState;
+};
+
+const LoginScreen = ({ navigation }) => {
+  const { params } = useRoute<RouteProp<RootStackParamList, "LoginScreen">>();
+
+  const [formState, setFormState] = useState<FormState>({
+    email: params?.email || "",
+    password: params?.password || "",
+    login: params?.login || "",
   });
   const [isSecurePass, setIsSecurePass] = useState(true);
 
@@ -31,10 +44,6 @@ const LoginScreen = ({ goToRegistration }) => {
 
   const onLogin = () => {
     console.log("formData:", formState);
-  };
-
-  const onSignUp = () => {
-    goToRegistration();
   };
 
   const showButton = (
@@ -87,7 +96,11 @@ const LoginScreen = ({ goToRegistration }) => {
               <View style={styles.signUpContainer}>
                 <Text style={[styles.baseText, styles.passwordButtonText]}>
                   Немає акаунту?
-                  <TouchableWithoutFeedback onPress={onSignUp}>
+                  <TouchableWithoutFeedback
+                    onPress={() =>
+                      navigation.navigate("Registration", formState)
+                    }
+                  >
                     <Text style={styles.signUpText}> Зареєструватися</Text>
                   </TouchableWithoutFeedback>
                 </Text>

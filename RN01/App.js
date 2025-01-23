@@ -3,6 +3,8 @@ import { useFonts } from "expo-font";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import RegistrationScreen from "./src/Screens/Registration/RegistrationScreen";
 import LoginScreen from "./src/Screens/Login/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,17 +23,24 @@ export default function App() {
     );
   }
 
-  const goToLogin = () => setIsLogin(true);
-  const goToRegistration = () => setIsLogin(false);
+  const MainStack = createStackNavigator();
 
   return (
-    <>
-      {isLogin ? (
-        <LoginScreen goToRegistration={goToRegistration} />
-      ) : (
-        <RegistrationScreen goToLogin={goToLogin} />
-      )}
-    </>
+    <NavigationContainer>
+      <MainStack.Navigator
+        initialRouteName={"Login"}
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <MainStack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ title: "Login" }}
+        />
+        <MainStack.Screen name="Registration" component={RegistrationScreen} />
+      </MainStack.Navigator>
+    </NavigationContainer>
   );
 }
 
