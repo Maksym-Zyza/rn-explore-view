@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { FC } from "react";
+import { useAppContext } from "../../hooks/useAppContext";
+import { NavigatorProps } from "../../types/navigation";
 
-const ProfileScreen = () => {
+const ProfileScreen: FC<NavigatorProps> = ({ navigation }) => {
+  const { formState } = useAppContext();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>
-      {/* <Text>Email: {email || "No email provided"}</Text>
-      <Text>Login: {login || "No login provided"}</Text> */}
+      <Text>Hello {formState.login}!</Text>
     </View>
   );
 };

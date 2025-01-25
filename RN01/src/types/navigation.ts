@@ -7,7 +7,13 @@ export type LoginScreenParams = RouteProp<
   "LoginScreen"
 >;
 
+export type NavigationProps = BottomTabNavigationProp<
+  ParamListBase,
+  string,
+  undefined
+>;
+
 export type NavigatorProps = {
   route: RouteProp<ParamListBase, string>;
-  navigation: BottomTabNavigationProp<ParamListBase, string, undefined>;
+  navigation: NavigationProps;
 };

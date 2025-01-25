@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,33 +14,30 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
 import Plus from "../../icons/Plus";
-import { useRoute, RouteProp } from "@react-navigation/native";
-import { FormState, FormStateKeys, RootStackParam } from "../../types/auth";
+import { FormStateKeys } from "../../types/auth";
 import { NavigatorProps } from "../../types/navigation";
+import { useAppContext } from "../../hooks/useAppContext";
+import { validateForm } from "../Login/helper";
 
 const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { params } = useRoute<RouteProp<RootStackParam, "LoginScreen">>();
-
+  const { isAuth, formState, setFormState } = useAppContext();
   const [isSecurePass, setIsSecurePass] = useState(true);
-  const [formState, setFormState] = useState<FormState>({
-    email: params?.email || "",
-    password: params?.password || "",
-    login: params?.login || "",
-  });
+
+  useEffect(() => {
+    isAuth ? navigation.navigate("Auth") : setFormState(formState);
+  }, []);
 
   const handleChange = (key: FormStateKeys, value: string) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      [key]: value,
-    }));
+    setFormState({ ...formState, [key]: value });
   };
 
   const handleAddAvatar = () => {
     console.log("AddAvatar");
   };
 
-  const onLogin = () => {
-    console.log("formData:", formState);
+  const onRegister = () => {
+    const error = validateForm(formState);
+    error ? alert(error) : navigation.navigate("Login", formState);
   };
 
   const showButton = (
@@ -97,7 +94,7 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
             </View>
 
             <View style={[styles.innerContainer, styles.buttonContainer]}>
-              <Button onPress={onLogin}>
+              <Button onPress={onRegister}>
                 <Text style={[styles.baseText, styles.loginButtonText]}>
                   Зареєстуватися
                 </Text>

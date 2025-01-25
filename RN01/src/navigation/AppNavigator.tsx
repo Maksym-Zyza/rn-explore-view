@@ -6,14 +6,12 @@ import { useAppContext } from "../hooks/useAppContext";
 
 const AppNavigator = () => {
   const { isAuth } = useAppContext();
+  console.log("isAuth>>", isAuth);
 
   const Stack = createStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        id={undefined}
-        initialRouteName={isAuth ? "Auth" : "Main"}
-      >
+      <Stack.Navigator id={undefined} initialRouteName={"Auth"}>
         <Stack.Screen
           name="Auth"
           component={AuthNavigator}

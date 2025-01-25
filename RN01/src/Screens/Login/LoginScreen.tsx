@@ -13,33 +13,24 @@ import {
 } from "react-native";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import { FormState, FormStateKeys } from "../../types/auth";
+import { FormStateKeys } from "../../types/auth";
 import { useAppContext } from "../../hooks/useAppContext";
-import { LoginScreenParams, NavigatorProps } from "../../types/navigation";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { NavigatorProps } from "../../types/navigation";
+import { validateForm } from "./helper";
 
 const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { setIsAuth } = useAppContext();
-  const { params } = useRoute<LoginScreenParams>();
-
-  const [formState, setFormState] = useState<FormState>({
-    email: params?.email || "",
-    password: params?.password || "",
-    login: params?.login || "",
-  });
+  const { setIsAuth, formState, setFormState } = useAppContext();
   const [isSecurePass, setIsSecurePass] = useState(true);
 
   const handleChange = (key: FormStateKeys, value: string) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      [key]: value,
-    }));
+    setFormState({ ...formState, [key]: value });
   };
 
   const onLogin = () => {
-    setIsAuth(true);
-    navigation.navigate("Main", formState);
-    console.log("formData>", formState);
+    const error = validateForm(formState);
+    validateForm(formState, navigation)
+      ? alert(error)
+      : (setIsAuth(true), navigation.navigate("Main", formState));
   };
 
   const showButton = (
