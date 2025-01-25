@@ -1,42 +1,45 @@
 import React, { FC } from "react";
-import { colors } from "../../styles/global";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import ProfileScreen from "../screens/Profile/ProfileScreen";
 import LogoutButton from "../components/LogoutButton";
-import MapScreen from "../screens/Map/MapScreen";
-import { NavigatorProps } from "../types/navigator";
 import PostsScreen from "../screens/Posts/PostsScreen";
-import { Posts } from "../icons/Posts";
-import Profile from "../icons/Profile";
 import CreatePostsScreen from "../screens/CreatePosts/CreatePostsScreen";
-import Plus from "../icons/Plus";
+import { useAppContext } from "../hooks/useAppContext";
+import TabIcon from "../components/TabIcon";
+import { NavigatorProps } from "../types/navigation";
+import { styles } from "./styles";
 
-const Tab = createBottomTabNavigator();
+const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
+  const { setIsAuth } = useAppContext();
+  const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator: FC<NavigatorProps> = ({ setIsAuth }) => {
+  const onLogout = () => {
+    navigation.navigate("Auth");
+    setIsAuth(false);
+  };
+
   return (
     <Tab.Navigator
-      id={undefined}
-      initialRouteName="Posts"
+      initialRouteName="Profile"
+      backBehavior="history"
       screenOptions={({ navigation }) => ({
-        tabBarLabel: "label",
-        tabBarStyle: {
-          display: "flex",
-          paddingVertical: 16,
-        },
-        tabBarLabelStyle: {
-          fontSize: 14,
-        },
+        headerRightContainerStyle: { paddingRight: "4%" },
+        headerLeftContainerStyle: { paddingLeft: "4%" },
+        headerStyle: styles.tabHeader,
+        headerTitleStyle: styles.tabHeaderTitle,
+        tabBarStyle: styles.tabBar,
+        tabBarItemStyle: styles.tabIcon,
+        tabBarShowLabel: false,
       })}
     >
       <Tab.Screen
         name="Posts"
         component={PostsScreen}
         options={() => ({
-          title: "Posts",
           tabBarLabel: "Posts",
-          tabBarIcon: ({ focused }) => <Posts />,
+          tabBarIcon: ({ focused }) => (
+            <TabIcon active={focused} icon="Posts" />
+          ),
         })}
       />
       <Tab.Screen
@@ -44,8 +47,7 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ setIsAuth }) => {
         component={CreatePostsScreen}
         options={() => ({
           title: "Create Posts",
-          tabBarLabel: "Create Posts",
-          tabBarIcon: ({ focused }) => <Plus />,
+          tabBarIcon: ({ focused }) => <TabIcon active={focused} icon="Plus" />,
         })}
       />
       <Tab.Screen
@@ -53,41 +55,12 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ setIsAuth }) => {
         component={ProfileScreen}
         options={() => ({
           title: "Profile",
-          tabBarLabel: "Profile",
-          tabBarIcon: ({ focused }) => <Profile />,
-        })}
-      />
-      <Tab.Screen
-        name="Map"
-        component={MapScreen}
-        options={({ navigation }) => ({
-          title: "Map",
+          headerRight: () => <LogoutButton onPress={onLogout} />,
           tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name="map"
-              size={32}
-              color={focused ? colors.orange : "black"}
-            />
+            <TabIcon active={focused} icon="Profile" />
           ),
         })}
       />
-
-      {/* <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={({ navigation }) => ({
-          title: "Profile",
-          headerRightContainerStyle: { paddingRight: 8 },
-          headerRight: () => <LogoutButton onPress={() => setIsAuth(false)} />,
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name="person"
-              size={32}
-              color={focused ? colors.orange : "black"}
-            />
-          ),
-        })}
-      /> */}
     </Tab.Navigator>
   );
 };

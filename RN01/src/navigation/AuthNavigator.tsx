@@ -1,12 +1,11 @@
-import React, { FC } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/Login/LoginScreen";
 import RegistrationScreen from "../screens/Registration/RegistrationScreen";
-import { NavigatorProps } from "../types/navigator";
 
-const Stack = createStackNavigator();
+const AuthNavigator = () => {
+  const Stack = createStackNavigator();
 
-const AuthNavigator: FC<NavigatorProps> = ({ setIsAuth }) => {
   return (
     <>
       <Stack.Navigator
@@ -20,7 +19,6 @@ const AuthNavigator: FC<NavigatorProps> = ({ setIsAuth }) => {
           name="Login"
           component={LoginScreen}
           options={{ title: "Login" }}
-          initialParams={{ setIsAuth }}
         />
         <Stack.Screen name="Registration" component={RegistrationScreen} />
       </Stack.Navigator>

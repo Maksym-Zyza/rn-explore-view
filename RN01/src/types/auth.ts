@@ -1,3 +1,5 @@
+export type FormStateKeys = "email" | "password" | "login";
+
 export type FormState = {
   email: string;
   password: string;
@@ -6,11 +8,4 @@ export type FormState = {
 
 export type RootStackParam = {
   LoginScreen: FormState;
-};
-
-export type RootStackParamList = {
-  LoginScreen: {
-    formValues: FormState;
-    setIsAuth: (state: boolean) => void;
-  };
 };

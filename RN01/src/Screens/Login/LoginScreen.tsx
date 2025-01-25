@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { styles } from "./LoginScreenStyles";
 import {
   View,
@@ -13,21 +13,23 @@ import {
 } from "react-native";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
+import { FormState, FormStateKeys } from "../../types/auth";
+import { useAppContext } from "../../hooks/useAppContext";
+import { LoginScreenParams, NavigatorProps } from "../../types/navigation";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { FormState, RootStackParamList } from "../../types/auth";
 
-const LoginScreen = ({ navigation }) => {
-  const { params } = useRoute<RouteProp<RootStackParamList, "LoginScreen">>();
-  const { setIsAuth, formValues } = params;
+const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
+  const { setIsAuth } = useAppContext();
+  const { params } = useRoute<LoginScreenParams>();
 
   const [formState, setFormState] = useState<FormState>({
-    email: formValues?.email || "",
-    password: formValues?.password || "",
-    login: formValues?.login || "",
+    email: params?.email || "",
+    password: params?.password || "",
+    login: params?.login || "",
   });
   const [isSecurePass, setIsSecurePass] = useState(true);
 
-  const handleChange = (key, value) => {
+  const handleChange = (key: FormStateKeys, value: string) => {
     setFormState((prevState) => ({
       ...prevState,
       [key]: value,
@@ -36,8 +38,8 @@ const LoginScreen = ({ navigation }) => {
 
   const onLogin = () => {
     setIsAuth(true);
-    navigation.navigate("Posts", formState);
-    console.log("formData:", formState);
+    navigation.navigate("Main", formState);
+    console.log("formData>", formState);
   };
 
   const showButton = (

@@ -4,7 +4,7 @@ import React from "react";
 const PostsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>PostsScreen</Text>
+      <Text style={styles.title}>PostsScreen</Text>
     </View>
   );
 };
@@ -16,5 +16,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  title: {
+    fontSize: 24,
   },
 });

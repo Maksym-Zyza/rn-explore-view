@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import {
   View,
   Text,
@@ -15,9 +15,10 @@ import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
 import Plus from "../../icons/Plus";
 import { useRoute, RouteProp } from "@react-navigation/native";
-import { FormState, RootStackParam } from "../../types/auth";
+import { FormState, FormStateKeys, RootStackParam } from "../../types/auth";
+import { NavigatorProps } from "../../types/navigation";
 
-const RegistrationScreen = ({ navigation }) => {
+const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   const { params } = useRoute<RouteProp<RootStackParam, "LoginScreen">>();
 
   const [isSecurePass, setIsSecurePass] = useState(true);
@@ -27,7 +28,7 @@ const RegistrationScreen = ({ navigation }) => {
     login: params?.login || "",
   });
 
-  const handleChange = (key, value) => {
+  const handleChange = (key: FormStateKeys, value: string) => {
     setFormState((prevState) => ({
       ...prevState,
       [key]: value,
@@ -65,7 +66,9 @@ const RegistrationScreen = ({ navigation }) => {
             <Text style={styles.title}>Реєстрація</Text>
 
             <View style={styles.avatar}>
-              <Plus style={styles.plusBtn} onPress={handleAddAvatar} />
+              <Pressable onPress={handleAddAvatar} style={styles.plusBtn}>
+                <Plus />
+              </Pressable>
             </View>
 
             <View style={[styles.innerContainer, styles.inputContainer]}>

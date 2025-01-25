@@ -1,14 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const ProfileScreen = ({ route }) => {
-  const { email, login, password } = route.params || {};
-
+const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>
-      <Text>Email: {email || "No email provided"}</Text>
-      <Text>Login: {login || "No login provided"}</Text>
+      {/* <Text>Email: {email || "No email provided"}</Text>
+      <Text>Login: {login || "No login provided"}</Text> */}
     </View>
   );
 };
