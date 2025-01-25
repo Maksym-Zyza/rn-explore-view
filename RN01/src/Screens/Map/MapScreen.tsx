@@ -4,7 +4,7 @@ import React from "react";
 const MapScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>MapScreen</Text>
+      <Text style={styles.title}>MapScreen</Text>
     </View>
   );
 };
@@ -16,5 +16,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  title: {
+    fontSize: 24,
   },
 });

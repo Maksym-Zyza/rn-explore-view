@@ -8,6 +8,7 @@ import { useAppContext } from "../hooks/useAppContext";
 import TabIcon from "../components/TabIcon";
 import { NavigatorProps } from "../types/navigation";
 import { styles } from "./styles";
+import PostsNavigator from "./PostsNavigator";
 
 const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
   const { setIsAuth } = useAppContext();
@@ -34,9 +35,10 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
     >
       <Tab.Screen
         name="Posts"
-        component={PostsScreen}
+        component={PostsNavigator}
         options={() => ({
           tabBarLabel: "Posts",
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon active={focused} icon="Posts" />
           ),

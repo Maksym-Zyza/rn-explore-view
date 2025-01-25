@@ -10,6 +10,7 @@ export const AppContextWrapper = (props: AppContextProps): JSX.Element => {
     email: "",
     password: "",
   });
+  const [tabBarShow, setTabBarShow] = useState(true);
 
   return (
     <AppContext.Provider
@@ -18,6 +19,8 @@ export const AppContextWrapper = (props: AppContextProps): JSX.Element => {
         setIsAuth,
         formState,
         setFormState,
+        tabBarShow,
+        setTabBarShow,
       }}
     >
       {props.children}

@@ -9,7 +9,6 @@ const AuthNavigator = () => {
   return (
     <>
       <Stack.Navigator
-        id={undefined}
         initialRouteName={"Registration"}
         screenOptions={{
           headerShown: false,

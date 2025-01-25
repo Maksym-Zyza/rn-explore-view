@@ -1,10 +1,26 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { FC } from "react";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { NavigatorProps } from "../../types/navigation";
+import { colors } from "../../../styles/global";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-const PostsScreen = () => {
+const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>PostsScreen</Text>
+      <TouchableOpacity
+        style={styles.mapBtn}
+        onPress={() => navigation.navigate("Map")}
+      >
+        <Text style={styles.btnText}>Go to Map</Text>
+        <Ionicons name="map" size={32} color={colors.white} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -19,5 +35,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  mapBtn: {
+    margin: 20,
+    width: 200,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    backgroundColor: colors.orange,
+    borderRadius: 40,
+    gap: 20,
+  },
+  btnText: {
+    fontSize: 20,
+    color: colors.white,
   },
 });

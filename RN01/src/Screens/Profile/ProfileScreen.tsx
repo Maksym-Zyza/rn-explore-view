@@ -8,7 +8,7 @@ const ProfileScreen: FC<NavigatorProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>
-      <Text>Hello {formState.login}!</Text>
+      <Text style={styles.text}>Hello {formState.login}!</Text>
     </View>
   );
 };
@@ -22,7 +22,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
+    margin: 16,
     fontSize: 24,
-    marginBottom: 16,
+  },
+  text: {
+    fontSize: 16,
   },
 });

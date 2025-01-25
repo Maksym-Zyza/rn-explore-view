@@ -2,16 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AuthNavigator from "./AuthNavigator";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { NavigationContainer } from "@react-navigation/native";
-import { useAppContext } from "../hooks/useAppContext";
 
 const AppNavigator = () => {
-  const { isAuth } = useAppContext();
-  console.log("isAuth>>", isAuth);
-
   const Stack = createStackNavigator();
+
   return (
     <NavigationContainer>
-      <Stack.Navigator id={undefined} initialRouteName={"Auth"}>
+      <Stack.Navigator initialRouteName={"Auth"}>
         <Stack.Screen
           name="Auth"
           component={AuthNavigator}
