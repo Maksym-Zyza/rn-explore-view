@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/Login/LoginScreen";
 import RegistrationScreen from "../screens/Registration/RegistrationScreen";
+import { NavRoutes } from "../types/navigation";
 
 const AuthNavigator = () => {
   const Stack = createStackNavigator();
@@ -9,20 +10,20 @@ const AuthNavigator = () => {
   return (
     <>
       <Stack.Navigator
-        initialRouteName={"Registration"}
+        initialRouteName={NavRoutes.Registration}
         screenOptions={{
           headerShown: false,
         }}
       >
         <Stack.Screen
-          name="Login"
+          name={NavRoutes.Login}
           component={LoginScreen}
-          options={{ title: "Login" }}
+          options={{ title: NavRoutes.Login }}
         />
         <Stack.Screen
-          name="Registration"
+          name={NavRoutes.Registration}
           component={RegistrationScreen}
-          options={{ title: "Registration" }}
+          options={{ title: NavRoutes.Registration }}
         />
       </Stack.Navigator>
     </>

@@ -17,3 +17,14 @@ export type NavigatorProps = {
   route: RouteProp<ParamListBase, string>;
   navigation: NavigationProps;
 };
+
+export enum NavRoutes {
+  Auth = "Auth",
+  Login = "Login",
+  Registration = "Registration",
+  Main = "Main",
+  Posts = "Posts",
+  Profile = "Profile",
+  CreatePost = "CreatePost",
+  Map = "Map",
+}

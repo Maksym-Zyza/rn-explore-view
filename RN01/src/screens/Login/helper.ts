@@ -1,4 +1,4 @@
-import { NavigationProps } from "../../types/navigation";
+import { NavRoutes, NavigationProps } from "../../types/navigation";
 
 export type FormState = {
   email: string;
@@ -28,7 +28,7 @@ export const validateForm = (
 
   if (!formState.login.trim()) {
     error = "Login is required.";
-    navigation && navigation.navigate("Registration");
+    navigation && navigation.navigate(NavRoutes.Registration);
   } else if (formState.login.length < 3) {
     error = "Login must be at least 3 characters.";
   }

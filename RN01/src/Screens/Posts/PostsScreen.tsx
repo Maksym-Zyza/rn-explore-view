@@ -1,12 +1,6 @@
 import React, { FC } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { NavigatorProps } from "../../types/navigation";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { colors } from "../../../styles/global";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -16,7 +10,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
       <Text style={styles.title}>PostsScreen</Text>
       <TouchableOpacity
         style={styles.mapBtn}
-        onPress={() => navigation.navigate("Map")}
+        onPress={() => navigation.navigate(NavRoutes.Map)}
       >
         <Text style={styles.btnText}>Go to Map</Text>
         <Ionicons name="map" size={32} color={colors.white} />

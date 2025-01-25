@@ -15,7 +15,7 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { FormStateKeys } from "../../types/auth";
 import { useAppContext } from "../../hooks/useAppContext";
-import { NavigatorProps } from "../../types/navigation";
+import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { validateForm } from "./helper";
 
 const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
@@ -85,7 +85,7 @@ const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
                   Немає акаунту?
                   <TouchableWithoutFeedback
                     onPress={() =>
-                      navigation.navigate("Registration", formState)
+                      navigation.navigate(NavRoutes.Registration, formState)
                     }
                   >
                     <Text style={styles.signUpText}> Зареєструватися</Text>

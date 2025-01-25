@@ -15,7 +15,7 @@ import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
 import Plus from "../../icons/Plus";
 import { FormStateKeys } from "../../types/auth";
-import { NavigatorProps } from "../../types/navigation";
+import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { useAppContext } from "../../hooks/useAppContext";
 import { validateForm } from "../Login/helper";
 
@@ -24,7 +24,7 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   const [isSecurePass, setIsSecurePass] = useState(true);
 
   useEffect(() => {
-    isAuth ? navigation.navigate("Auth") : setFormState(formState);
+    isAuth ? navigation.navigate(NavRoutes.Auth) : setFormState(formState);
   }, []);
 
   const handleChange = (key: FormStateKeys, value: string) => {

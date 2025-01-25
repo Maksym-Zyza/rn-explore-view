@@ -2,11 +2,10 @@ import React, { FC } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProfileScreen from "../screens/Profile/ProfileScreen";
 import LogoutButton from "../components/LogoutButton";
-import PostsScreen from "../screens/Posts/PostsScreen";
 import CreatePostsScreen from "../screens/CreatePosts/CreatePostsScreen";
 import { useAppContext } from "../hooks/useAppContext";
 import TabIcon from "../components/TabIcon";
-import { NavigatorProps } from "../types/navigation";
+import { NavRoutes, NavigatorProps } from "../types/navigation";
 import { styles } from "./styles";
 import PostsNavigator from "./PostsNavigator";
 
@@ -15,13 +14,13 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
   const Tab = createBottomTabNavigator();
 
   const onLogout = () => {
-    navigation.navigate("Auth");
+    navigation.navigate(NavRoutes.Auth);
     setIsAuth(false);
   };
 
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
+      initialRouteName={NavRoutes.Profile}
       backBehavior="history"
       screenOptions={({ navigation }) => ({
         headerRightContainerStyle: { paddingRight: "4%" },
@@ -34,10 +33,10 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
       })}
     >
       <Tab.Screen
-        name="Posts"
+        name={NavRoutes.Posts}
         component={PostsNavigator}
         options={() => ({
-          tabBarLabel: "Posts",
+          tabBarLabel: NavRoutes.Posts,
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIcon active={focused} icon="Posts" />
@@ -45,18 +44,18 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
         })}
       />
       <Tab.Screen
-        name="CreatePosts"
+        name={NavRoutes.CreatePost}
         component={CreatePostsScreen}
         options={() => ({
-          title: "Create Posts",
+          title: NavRoutes.CreatePost,
           tabBarIcon: ({ focused }) => <TabIcon active={focused} icon="Plus" />,
         })}
       />
       <Tab.Screen
-        name="Profile"
+        name={NavRoutes.Profile}
         component={ProfileScreen}
         options={() => ({
-          title: "Profile",
+          title: NavRoutes.Profile,
           headerRight: () => <LogoutButton onPress={onLogout} />,
           tabBarIcon: ({ focused }) => (
             <TabIcon active={focused} icon="Profile" />

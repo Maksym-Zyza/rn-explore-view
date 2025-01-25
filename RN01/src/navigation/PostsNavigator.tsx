@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import PostsScreen from "../screens/Posts/PostsScreen";
-import { NavigatorProps } from "../types/navigation";
+import { NavRoutes, NavigatorProps } from "../types/navigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import MapScreen from "../screens/Map/MapScreen";
 
@@ -9,7 +9,7 @@ const PostsNavigator: FC<NavigatorProps> = ({ navigation }) => {
 
   return (
     <Stack.Navigator
-      initialRouteName="Posts"
+      initialRouteName={NavRoutes.Posts}
       screenOptions={() => ({ headerShown: true })}
     >
       <Stack.Screen
@@ -18,7 +18,7 @@ const PostsNavigator: FC<NavigatorProps> = ({ navigation }) => {
         options={() => ({ headerLeft: () => null })}
       />
 
-      <Stack.Screen name="Map" component={MapScreen} />
+      <Stack.Screen name={NavRoutes.Map} component={MapScreen} />
     </Stack.Navigator>
   );
 };
