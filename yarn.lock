@@ -2736,6 +2736,13 @@ expo-asset@~11.0.2:
     invariant "^2.2.4"
     md5-file "^3.2.3"
 
+expo-camera@~16.0.14:
+  version "16.0.14"
+  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-16.0.14.tgz#928015c6b0b29dcdcb8ebc948ef6290704d6daf0"
+  integrity sha512-nTQjb3Vtp0rA40fQdGLO+YCg7kHigBs9J4LkAXiL7Gsjl8lxYgFqHCCrFLOm/4D2TJSnqHSGQQflzwoWQDpZzw==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-constants@~17.0.4:
   version "17.0.4"
   resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-17.0.4.tgz"
@@ -2758,10 +2765,27 @@ expo-font@^13.0.3, expo-font@~13.0.3:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-loader@~5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-5.0.0.tgz#4f58a21ab26e40d6fccc211b664fd9fe21a5dcb8"
+  integrity sha512-Eg+5FHtyzv3Jjw9dHwu2pWy4xjf8fu3V0Asyy42kO+t/FbvW/vjUixpTjPtgKQLQh+2/9Nk4JjFDV6FwCnF2ZA==
+
+expo-image-picker@^16.0.4:
+  version "16.0.4"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-16.0.4.tgz#f4f1e8cf5453c08c2622aafe3f139b846b261d7e"
+  integrity sha512-LeTdQxL+kS8wiFOf+mTxDZmr0Ok3KwcpvCaDnXwCdCQuszVd4sSml7lg+oaJfkWj793u74M+8j0hQaEDHCgkxg==
+  dependencies:
+    expo-image-loader "~5.0.0"
+
 expo-keep-awake@~14.0.2:
   version "14.0.2"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-14.0.2.tgz"
   integrity sha512-71XAMnoWjKZrN8J7Q3+u0l9Ytp4OfhNAYz8BCWF1/9aFUw09J3I7Z5DuI3MUsVMa/KWi+XhG+eDUFP8cVA19Uw==
+
+expo-media-library@~17.0.5:
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/expo-media-library/-/expo-media-library-17.0.5.tgz#26413b3486f8fddd75b71306eb1ccf9c2c0779aa"
+  integrity sha512-AHfaaNvvHtIu5X51tqp4VvwlBTtMCLeFiYLbrNxUklSop0JA2fDyZrPhtRdMGrp/wtu3gvay2NDKAp3JzczOzw==
 
 expo-modules-autolinking@2.0.5:
   version "2.0.5"

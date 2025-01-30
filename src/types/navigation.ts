@@ -27,4 +27,5 @@ export enum NavRoutes {
   Profile = "Profile",
   CreatePost = "CreatePost",
   Map = "Map",
+  Comments = "Comments",
 }

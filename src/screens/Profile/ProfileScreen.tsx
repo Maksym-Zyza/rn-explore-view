@@ -1,14 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
 import { useAppContext } from "../../hooks/useAppContext";
-import { NavigatorProps } from "../../types/navigation";
+import { NavRoutes, NavigatorProps } from "../../types/navigation";
+import Placeholder from "../../components/Placeholder";
 
 const ProfileScreen: FC<NavigatorProps> = ({ navigation }) => {
   const { formState } = useAppContext();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile Screen</Text>
-      <Text style={styles.text}>Hello {formState.login}!</Text>
+      <Text style={styles.title}>{`Hello ${formState.login}!`}</Text>
+      <Placeholder
+        text="Let's start by creating new posts."
+        route={NavRoutes.CreatePost}
+        icon="add"
+      />
     </View>
   );
 };

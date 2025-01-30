@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light_gray,
   },
   baseText: {
+    flex: 1,
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 18,
