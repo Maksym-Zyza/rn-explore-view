@@ -5,10 +5,10 @@ import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import Placeholder from "../../components/Placeholder";
 
 const ProfileScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { formState } = useAppContext();
+  const { user } = useAppContext();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{`Hello ${formState.login}!`}</Text>
+      <Text style={styles.title}>{`Hello ${user.login}!`}</Text>
       <Placeholder
         text="Let's start by creating new posts."
         route={NavRoutes.CreatePost}

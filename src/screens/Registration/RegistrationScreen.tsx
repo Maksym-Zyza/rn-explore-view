@@ -14,21 +14,21 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
 import Plus from "../../icons/Plus";
-import { FormStateKeys } from "../../types/auth";
+import { UserKeys } from "../../types/auth";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { useAppContext } from "../../hooks/useAppContext";
 import { validateForm } from "../Login/helper";
 
 const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { isAuth, formState, setFormState } = useAppContext();
+  const { isAuth, user, setUser } = useAppContext();
   const [isSecurePass, setIsSecurePass] = useState(true);
 
   useEffect(() => {
-    isAuth ? navigation.navigate(NavRoutes.Auth) : setFormState(formState);
+    isAuth ? navigation.navigate(NavRoutes.Auth) : setUser(user);
   }, []);
 
-  const handleChange = (key: FormStateKeys, value: string) => {
-    setFormState({ ...formState, [key]: value });
+  const handleChange = (key: UserKeys, value: string) => {
+    setUser({ ...user, [key]: value });
   };
 
   const handleAddAvatar = () => {
@@ -36,8 +36,8 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   };
 
   const onRegister = () => {
-    const error = validateForm(formState);
-    error ? alert(error) : navigation.navigate("Login", formState);
+    const error = validateForm(user);
+    error ? alert(error) : navigation.navigate("Login", user);
   };
 
   const showButton = (
@@ -70,21 +70,21 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
 
             <View style={[styles.innerContainer, styles.inputContainer]}>
               <Input
-                value={formState.login}
+                value={user.login}
                 autofocus={true}
                 placeholder="Логін"
                 onTextChange={(value) => handleChange("login", value)}
               />
 
               <Input
-                value={formState.email}
+                value={user.email}
                 autofocus={false}
                 placeholder="Адреса електронної пошти"
                 onTextChange={(value) => handleChange("email", value)}
               />
 
               <Input
-                value={formState.password}
+                value={user.password}
                 placeholder="Пароль"
                 rightButton={showButton}
                 outerStyles={styles.passwordButton}
@@ -104,7 +104,7 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
                 <Text style={[styles.baseText, styles.passwordButtonText]}>
                   Вже є акаунт?
                   <TouchableWithoutFeedback
-                    onPress={() => navigation.navigate("Login", formState)}
+                    onPress={() => navigation.navigate("Login", user)}
                   >
                     <Text style={styles.signUpText}> Увійти</Text>
                   </TouchableWithoutFeedback>

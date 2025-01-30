@@ -13,24 +13,24 @@ import {
 } from "react-native";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import { FormStateKeys } from "../../types/auth";
+import { UserKeys } from "../../types/auth";
 import { useAppContext } from "../../hooks/useAppContext";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { validateForm } from "./helper";
 
 const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { setIsAuth, formState, setFormState } = useAppContext();
+  const { setIsAuth, user, setUser } = useAppContext();
   const [isSecurePass, setIsSecurePass] = useState(true);
 
-  const handleChange = (key: FormStateKeys, value: string) => {
-    setFormState({ ...formState, [key]: value });
+  const handleChange = (key: UserKeys, value: string) => {
+    setUser({ ...user, [key]: value });
   };
 
   const onLogin = () => {
-    const error = validateForm(formState);
-    validateForm(formState, navigation)
+    const error = validateForm(user);
+    validateForm(user, navigation)
       ? alert(error)
-      : (setIsAuth(true), navigation.navigate("Main", formState));
+      : (setIsAuth(true), navigation.navigate("Main", user));
   };
 
   const showButton = (
@@ -57,14 +57,14 @@ const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
 
             <View style={[styles.innerContainer, styles.inputContainer]}>
               <Input
-                value={formState.email}
+                value={user.email}
                 autofocus={true}
                 placeholder="Адреса електронної пошти"
                 onTextChange={(value) => handleChange("email", value)}
               />
 
               <Input
-                value={formState.password}
+                value={user.password}
                 placeholder={"Пароль"}
                 rightButton={showButton}
                 outerStyles={styles.passwordButton}
@@ -85,7 +85,7 @@ const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
                   Немає акаунту?
                   <TouchableWithoutFeedback
                     onPress={() =>
-                      navigation.navigate(NavRoutes.Registration, formState)
+                      navigation.navigate(NavRoutes.Registration, user)
                     }
                   >
                     <Text style={styles.signUpText}> Зареєструватися</Text>

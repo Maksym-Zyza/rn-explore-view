@@ -10,7 +10,7 @@ import { useAppContext } from "../../hooks/useAppContext";
 import Placeholder from "../../components/Placeholder";
 
 const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { posts } = useAppContext();
+  const { user, posts } = useAppContext();
 
   return (
     <View style={styles.postsContainer}>
@@ -21,8 +21,8 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
           resizeMode="cover"
         />
         <View style={styles.userData}>
-          <Text style={styles.userName}>Natali Romanova</Text>
-          <Text style={styles.userEmail}>email@example.com</Text>
+          <Text style={styles.userName}>{user.login}</Text>
+          <Text style={styles.userEmail}>{user.email}</Text>
         </View>
       </View>
 

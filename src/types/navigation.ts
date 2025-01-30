@@ -1,11 +1,8 @@
 import { ParamListBase, RouteProp } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { FormState } from "./auth";
+import { User } from "./auth";
 
-export type LoginScreenParams = RouteProp<
-  { LoginScreen: FormState },
-  "LoginScreen"
->;
+export type LoginScreenParams = RouteProp<{ LoginScreen: User }, "LoginScreen">;
 
 export type NavigationProps = BottomTabNavigationProp<
   ParamListBase,

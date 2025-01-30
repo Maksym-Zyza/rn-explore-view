@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { AppContextProps } from "../../types/context";
 import AppContext from "./AppContext";
-import { FormState } from "../../types/auth";
+import { User } from "../../types/auth";
 import { Post } from "../../types/posts";
 
 export const AppContextWrapper = (props: AppContextProps): JSX.Element => {
   const [isAuth, setIsAuth] = useState(false);
-  const [formState, setFormState] = useState<FormState>({
+  const [user, setUser] = useState<User>({
     login: "",
     email: "",
     password: "",
@@ -19,8 +19,8 @@ export const AppContextWrapper = (props: AppContextProps): JSX.Element => {
       value={{
         isAuth,
         setIsAuth,
-        formState,
-        setFormState,
+        user,
+        setUser,
         tabBarShow,
         setTabBarShow,
         posts,
