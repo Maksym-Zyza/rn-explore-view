@@ -1,4 +1,5 @@
-import { FormState } from "./auth";
+import { User } from "./auth";
+import { Post } from "./posts";
 
 export type AppContextProps = {
   children: React.ReactNode;
@@ -9,6 +10,8 @@ export type AppContextType = {
   setIsAuth: (state: boolean) => void;
   tabBarShow: boolean;
   setTabBarShow: (state: boolean) => void;
-  formState: FormState;
-  setFormState: (state: FormState) => void;
+  user: User;
+  setUser: (state: User) => void;
+  posts: Post[];
+  setPosts: (state: Post[]) => void;
 };

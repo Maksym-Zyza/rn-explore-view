@@ -10,7 +10,7 @@ import { styles } from "./styles";
 import PostsNavigator from "./PostsNavigator";
 
 const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
-  const { setIsAuth } = useAppContext();
+  const { setIsAuth, tabBarShow } = useAppContext();
   const Tab = createBottomTabNavigator();
 
   const onLogout = () => {
@@ -38,6 +38,7 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
         options={() => ({
           tabBarLabel: NavRoutes.Posts,
           headerShown: false,
+          tabBarStyle: { display: tabBarShow ? "flex" : "none" },
           tabBarIcon: ({ focused }) => (
             <TabIcon active={focused} icon="Posts" />
           ),

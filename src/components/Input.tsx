@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
-import { colors } from "../../styles/global";
+import { colors } from "../styles/global";
 
 type InputProps = {
   value: string;
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light_gray,
   },
   baseText: {
+    flex: 1,
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 18,

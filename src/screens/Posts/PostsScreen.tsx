@@ -1,48 +1,84 @@
-import React, { FC } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FC } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { Feather } from "@expo/vector-icons";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
-import { colors } from "../../../styles/global";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { colors } from "../../styles/global";
+import { styles } from "./PostsScreenStyles";
+import { useAppContext } from "../../hooks/useAppContext";
+import Placeholder from "../../components/Placeholder";
+import { AVATAR_IMG } from "../../variables";
 
 const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
+  const { user, posts } = useAppContext();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>PostsScreen</Text>
-      <TouchableOpacity
-        style={styles.mapBtn}
-        onPress={() => navigation.navigate(NavRoutes.Map)}
-      >
-        <Text style={styles.btnText}>Go to Map</Text>
-        <Ionicons name="map" size={32} color={colors.white} />
-      </TouchableOpacity>
+    <View style={styles.postsContainer}>
+      <View style={styles.userContainer}>
+        <Image
+          style={styles.avatarPhoto}
+          source={user.photo ? { uri: user.photo } : AVATAR_IMG}
+          resizeMode="cover"
+        />
+        <View style={styles.userData}>
+          <Text style={styles.userName}>{user.login}</Text>
+          <Text style={styles.userEmail}>{user.email}</Text>
+        </View>
+      </View>
+
+      <View>
+        {posts.length === 0 && (
+          <Placeholder
+            text={"There are no posts. You can add a new one."}
+            route={NavRoutes.CreatePost}
+            icon="add"
+          />
+        )}
+        <FlatList
+          data={posts}
+          keyExtractor={(item, indx) => indx.toString()}
+          ItemSeparatorComponent={() => <View style={{ height: 34 }}></View>}
+          renderItem={({ item }) => (
+            <View>
+              <Image style={styles.postPhoto} source={{ uri: item.photo }} />
+              <Text style={styles.postTitle}>{item.title}</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <TouchableOpacity
+                  style={{ flexDirection: "row", alignItems: "center" }}
+                  onPress={() => navigation.navigate(NavRoutes.Comments)}
+                >
+                  <Feather
+                    name="message-circle"
+                    size={24}
+                    color={colors.text_gray}
+                  />
+                  <Text style={styles.count}>0</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate(NavRoutes.Map, {
+                      latitude: item.coords?.latitude,
+                      longitude: item.coords?.longitude,
+                    })
+                  }
+                  style={{ flexDirection: "row", alignItems: "center" }}
+                >
+                  <Feather name="map-pin" size={24} color={colors.text_gray} />
+                  <Text style={styles.place}>{item.place}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };
 
 export default PostsScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 24,
-  },
-  mapBtn: {
-    margin: 20,
-    width: 200,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    backgroundColor: colors.orange,
-    borderRadius: 40,
-    gap: 20,
-  },
-  btnText: {
-    fontSize: 20,
-    color: colors.white,
-  },
-});

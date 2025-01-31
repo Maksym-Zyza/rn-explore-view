@@ -1,11 +1,12 @@
-export type FormStateKeys = "email" | "password" | "login";
+export type UserKeys = "email" | "password" | "login" | "photo";
 
-export type FormState = {
+export type User = {
   email: string;
   password: string;
   login: string;
+  photo?: string;
 };
 
 export type RootStackParam = {
-  LoginScreen: FormState;
+  LoginScreen: User;
 };

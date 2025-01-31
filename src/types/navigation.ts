@@ -1,11 +1,8 @@
 import { ParamListBase, RouteProp } from "@react-navigation/native";
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
-import { FormState } from "./auth";
+import { Post } from "./posts";
 
-export type LoginScreenParams = RouteProp<
-  { LoginScreen: FormState },
-  "LoginScreen"
->;
+export type MapScreenProps = RouteProp<Params, "Map">;
 
 export type NavigationProps = BottomTabNavigationProp<
   ParamListBase,
@@ -27,4 +24,10 @@ export enum NavRoutes {
   Profile = "Profile",
   CreatePost = "CreatePost",
   Map = "Map",
+  Comments = "Comments",
 }
+
+export type Params = {
+  Map: { latitude: number; longitude: number };
+  Comments: { post: Post };
+};
