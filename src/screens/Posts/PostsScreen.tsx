@@ -7,6 +7,7 @@ import { colors } from "../../styles/global";
 import { styles } from "./PostsScreenStyles";
 import { useAppContext } from "../../hooks/useAppContext";
 import Placeholder from "../../components/Placeholder";
+import { AVATAR_IMG } from "../../variables";
 
 const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
   const { user, posts } = useAppContext();
@@ -16,7 +17,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
       <View style={styles.userContainer}>
         <Image
           style={styles.avatarPhoto}
-          source={{ uri: user.photo || "" }}
+          source={user.photo ? { uri: user.photo } : AVATAR_IMG}
           resizeMode="cover"
         />
         <View style={styles.userData}>

@@ -4,7 +4,7 @@ import ImagePiker from "./ImagePiker";
 import Plus from "../icons/Plus";
 import { useAppContext } from "../hooks/useAppContext";
 import { UserKeys } from "../types/auth";
-import { SCREEN_WIDTH } from "../variables";
+import { AVATAR_IMG, SCREEN_WIDTH } from "../variables";
 import { colors } from "../styles/global";
 
 const Avatar = () => {
@@ -16,7 +16,11 @@ const Avatar = () => {
 
   return (
     <View style={styles.avatar}>
-      <Image style={styles.postPhoto} source={{ uri: user.photo || "" }} />
+      <Image
+        style={styles.postPhoto}
+        source={user.photo ? { uri: user.photo } : AVATAR_IMG}
+      />
+
       <Pressable style={styles.plusBtn}>
         <ImagePiker setPhoto={handleAddPhoto}>
           <Plus />
