@@ -1,22 +1,14 @@
-import React, { useCallback } from "react";
+import React from "react";
+import { useRoute } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { MapScreenProps } from "../../types/navigation";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { useAppContext } from "../../hooks/useAppContext";
+import { useHideTabBar } from "../../hooks/useHideTabBar";
 
 const MapScreen = () => {
-  const { setTabBarShow } = useAppContext();
+  useHideTabBar();
   const route = useRoute<MapScreenProps>();
   const location = route.params;
-
-  useFocusEffect(
-    useCallback(() => {
-      setTabBarShow(false);
-
-      return () => setTabBarShow(true);
-    }, [setTabBarShow])
-  );
 
   return (
     <View style={styles.container}>
