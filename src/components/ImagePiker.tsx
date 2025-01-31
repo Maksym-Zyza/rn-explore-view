@@ -2,13 +2,14 @@ import React, { FC, ReactNode } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { PostKey } from "../types/posts";
+import { UserKeys } from "../types/auth";
 
 type Props = {
-  handlePostValue: (key: PostKey, value: string) => void;
+  setPhoto: (key: "photo", value: string) => void;
   children: ReactNode;
 };
 
-const ImagePiker: FC<Props> = ({ children, handlePostValue }) => {
+const ImagePiker: FC<Props> = ({ children, setPhoto }) => {
   const pickImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -26,7 +27,7 @@ const ImagePiker: FC<Props> = ({ children, handlePostValue }) => {
     if (!result.canceled) {
       const uri = result.assets[0].uri;
 
-      handlePostValue("photo", uri);
+      setPhoto("photo", uri);
     }
   };
 

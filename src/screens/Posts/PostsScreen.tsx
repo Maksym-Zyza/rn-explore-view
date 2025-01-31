@@ -16,7 +16,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
       <View style={styles.userContainer}>
         <Image
           style={styles.avatarPhoto}
-          source={require("../../../assets/images/avatar.png")}
+          source={{ uri: user.photo || "" }}
           resizeMode="cover"
         />
         <View style={styles.userData}>

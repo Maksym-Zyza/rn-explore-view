@@ -13,11 +13,11 @@ import {
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
-import Plus from "../../icons/Plus";
 import { UserKeys } from "../../types/auth";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { useAppContext } from "../../hooks/useAppContext";
 import { validateForm } from "../Login/helper";
+import Avatar from "../../components/Avatar";
 
 const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   const { isAuth, user, setUser } = useAppContext();
@@ -29,10 +29,6 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
 
   const handleChange = (key: UserKeys, value: string) => {
     setUser({ ...user, [key]: value });
-  };
-
-  const handleAddAvatar = () => {
-    console.log("AddAvatar");
   };
 
   const onRegister = () => {
@@ -60,13 +56,9 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
           behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
           <View style={styles.formContainer}>
-            <Text style={styles.title}>Реєстрація</Text>
+            <Avatar />
 
-            <View style={styles.avatar}>
-              <Pressable onPress={handleAddAvatar} style={styles.plusBtn}>
-                <Plus />
-              </Pressable>
-            </View>
+            <Text style={styles.title}>Реєстрація</Text>
 
             <View style={[styles.innerContainer, styles.inputContainer]}>
               <Input

@@ -34,23 +34,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 32,
   },
-  avatar: {
-    position: "absolute",
-    top: -60,
-    left: SCREEN_WIDTH / 2 - 60,
-    width: 120,
-    height: 120,
-    borderRadius: 16,
-    backgroundColor: colors.light_gray,
-  },
-
-  plusBtn: {
-    position: "absolute",
-    right: -12,
-    bottom: 14,
-    width: 25,
-    height: 25,
-  },
   title: {
     marginTop: 60,
     fontSize: 30,

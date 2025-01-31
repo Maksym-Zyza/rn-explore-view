@@ -127,7 +127,7 @@ const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
             </CameraView>
           </View>
           <Text style={styles.textUploade}>
-            <ImagePiker handlePostValue={handlePostValue}>
+            <ImagePiker setPhoto={handlePostValue}>
               <Text style={[styles.btnText, styles.grayText]}>
                 Завантажте фото
               </Text>
