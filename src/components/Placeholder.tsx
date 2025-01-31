@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { colors } from "../../styles/global";
+import { colors } from "../styles/global";
 import { NavRoutes, NavigationProps } from "../types/navigation";
 
 type Props = {

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import { colors } from "../../styles/global";
+import { colors } from "../styles/global";
 
 type ActiveTabProps = {
   active: boolean;

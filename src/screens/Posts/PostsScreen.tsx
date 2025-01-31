@@ -3,8 +3,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
-
-import { colors } from "../../../styles/global";
+import { colors } from "../../styles/global";
 import { styles } from "./PostsScreenStyles";
 import { useAppContext } from "../../hooks/useAppContext";
 import Placeholder from "../../components/Placeholder";

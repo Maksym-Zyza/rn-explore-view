@@ -17,7 +17,7 @@ import {
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { styles } from "./CreatePostsScreenStyles";
-import { colors } from "../../../styles/global";
+import { colors } from "../../styles/global";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import ImagePiker from "../../components/ImagePiker";
 import { useAppContext } from "../../hooks/useAppContext";

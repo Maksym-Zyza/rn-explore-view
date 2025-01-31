@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../../styles/global";
+import { colors } from "../../styles/global";
 import { SCREEN_WIDTH } from "../../variables";
 
 export const styles = StyleSheet.create({
