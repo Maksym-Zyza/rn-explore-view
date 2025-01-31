@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, FC } from "react";
 import * as MediaLibrary from "expo-media-library";
-// import * as Location from "expo-location";
+import * as Location from "expo-location";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import {
   KeyboardAvoidingView,
@@ -33,15 +33,15 @@ const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== "granted") {
-  //       setErrorMsg("Permission to access location was denied");
-  //       return;
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+    })();
+  }, []);
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -81,13 +81,14 @@ const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
   const isAllowed = !!post.photo && !!post.title && !!post.place;
 
   const onSubmit = async () => {
-    // const location = await Location.getCurrentPositionAsync({});
-    // const coords = {
-    //   latitude: location.coords.latitude,
-    //   longitude: location.coords.longitude,
-    // };
+    const location = await Location.getCurrentPositionAsync({});
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
 
-    setPosts([...posts, post]);
+    const newPost = { ...post, coords };
+    setPosts([...posts, newPost]);
     navigation.navigate(NavRoutes.Posts);
     onReset();
   };

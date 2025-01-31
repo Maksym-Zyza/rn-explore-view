@@ -25,7 +25,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.container}>
+      <View>
         {posts.length === 0 && (
           <Placeholder
             text={"There are no posts. You can add a new one."}
@@ -38,7 +38,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
           keyExtractor={(item, indx) => indx.toString()}
           ItemSeparatorComponent={() => <View style={{ height: 34 }}></View>}
           renderItem={({ item }) => (
-            <View style={{ width: "100%" }}>
+            <View>
               <Image style={styles.postPhoto} source={{ uri: item.photo }} />
               <Text style={styles.postTitle}>{item.title}</Text>
               <View
@@ -60,10 +60,11 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
                   <Text style={styles.count}>0</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={
-                    () => navigation.navigate(NavRoutes.Map)
-                    // latitude: item.coords?.latitude,
-                    // longitude: item.coords?.longitude,
+                  onPress={() =>
+                    navigation.navigate(NavRoutes.Map, {
+                      latitude: item.coords?.latitude,
+                      longitude: item.coords?.longitude,
+                    })
                   }
                   style={{ flexDirection: "row", alignItems: "center" }}
                 >

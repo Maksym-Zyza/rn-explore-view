@@ -1,13 +1,23 @@
-import React, { FC } from "react";
-import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import React, { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { Params } from "../../types/navigation";
+import { MapScreenProps } from "../../types/navigation";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useAppContext } from "../../hooks/useAppContext";
 
-type MapScreenProps = NativeStackScreenProps<Params, "Map">;
-
-const MapScreen: FC<MapScreenProps> = ({ navigation, route }) => {
+const MapScreen = () => {
+  const { setTabBarShow } = useAppContext();
+  const route = useRoute<MapScreenProps>();
   const location = route.params;
+
+  useFocusEffect(
+    useCallback(() => {
+      setTabBarShow(false);
+
+      return () => setTabBarShow(true);
+    }, [setTabBarShow])
+  );
+
   return (
     <View style={styles.container}>
       <MapView
