@@ -1,10 +1,33 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { FC } from "react";
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { StyleSheet, View } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import { Params } from "../../types/navigation";
 
-const MapScreen = () => {
+type MapScreenProps = NativeStackScreenProps<Params, "Map">;
+
+const MapScreen: FC<MapScreenProps> = ({ navigation, route }) => {
+  const location = route.params;
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>MapScreen</Text>
+      <MapView
+        style={styles.map}
+        region={{
+          latitude: location?.latitude || 37.4220936,
+          longitude: location?.longitude || -122.083922,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        <Marker
+          title="I am here"
+          coordinate={{
+            latitude: location?.latitude || 37.4220936,
+            longitude: location?.longitude || -122.083922,
+          }}
+          description="Hello"
+        />
+      </MapView>
     </View>
   );
 };
@@ -19,5 +42,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+  },
+  map: {
+    width: "100%",
+    height: "100%",
   },
 });

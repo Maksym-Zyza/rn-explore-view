@@ -25,7 +25,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
         </View>
       </View>
 
-      <View>
+      <View style={styles.container}>
         {posts.length === 0 && (
           <Placeholder
             text={"There are no posts. You can add a new one."}
@@ -38,7 +38,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
           keyExtractor={(item, indx) => indx.toString()}
           ItemSeparatorComponent={() => <View style={{ height: 34 }}></View>}
           renderItem={({ item }) => (
-            <View>
+            <View style={{ width: "100%" }}>
               <Image style={styles.postPhoto} source={{ uri: item.photo }} />
               <Text style={styles.postTitle}>{item.title}</Text>
               <View
