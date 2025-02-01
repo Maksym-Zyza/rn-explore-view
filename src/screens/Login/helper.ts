@@ -4,6 +4,7 @@ export type User = {
   email: string;
   password: string;
   login: string;
+  photo: string;
 };
 
 export const validateForm = (

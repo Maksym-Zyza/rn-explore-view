@@ -16,24 +16,34 @@ import { styles } from "./RegistrationScreenStyles";
 import { UserKeys } from "../../types/auth";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { useAppContext } from "../../hooks/useAppContext";
-import { validateForm } from "../Login/helper";
+import { User, validateForm } from "../Login/helper";
 import Avatar from "../../components/Avatar";
+import { registerDB } from "../../utils/auth";
+import { initialUserData } from "../../utils/initialData";
 
 const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   const { isAuth, user, setUser } = useAppContext();
+  const [formData, setFormData] = useState<User>(initialUserData);
   const [isSecurePass, setIsSecurePass] = useState(true);
 
   useEffect(() => {
-    isAuth ? navigation.navigate(NavRoutes.Auth) : setUser(user);
+    isAuth ? navigation.navigate(NavRoutes.Auth) : setFormData(user);
   }, []);
 
   const handleChange = (key: UserKeys, value: string) => {
-    setUser({ ...user, [key]: value });
+    setFormData({ ...formData, [key]: value });
   };
 
   const onRegister = () => {
-    const error = validateForm(user);
-    error ? alert(error) : navigation.navigate("Login", user);
+    const error = validateForm(formData);
+    if (error) {
+      alert(error);
+    } else {
+      const { email, password, login, photo } = formData;
+      registerDB(email, password, login, photo);
+      setUser(formData);
+      navigation.navigate("Login", user);
+    }
   };
 
   const showButton = (
@@ -62,21 +72,21 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
 
             <View style={[styles.innerContainer, styles.inputContainer]}>
               <Input
-                value={user.login}
+                value={formData.login}
                 autofocus={true}
                 placeholder="Логін"
                 onTextChange={(value) => handleChange("login", value)}
               />
 
               <Input
-                value={user.email}
+                value={formData.email}
                 autofocus={false}
                 placeholder="Адреса електронної пошти"
                 onTextChange={(value) => handleChange("email", value)}
               />
 
               <Input
-                value={user.password}
+                value={formData.password}
                 placeholder="Пароль"
                 rightButton={showButton}
                 outerStyles={styles.passwordButton}
