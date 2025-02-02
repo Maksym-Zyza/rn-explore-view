@@ -16,10 +16,8 @@ export type NavigatorProps = {
 };
 
 export enum NavRoutes {
-  Auth = "Auth",
   Login = "Login",
   Registration = "Registration",
-  Main = "Main",
   Posts = "Posts",
   Profile = "Profile",
   CreatePost = "CreatePost",

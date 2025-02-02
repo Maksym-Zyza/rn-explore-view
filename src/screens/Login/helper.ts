@@ -4,12 +4,10 @@ export type User = {
   email: string;
   password: string;
   login: string;
+  photo: string;
 };
 
-export const validateForm = (
-  user: User,
-  navigation?: NavigationProps
-): string => {
+export const validateForm = (user: User): string => {
   let error = "";
 
   if (!user.password.trim()) {
@@ -28,7 +26,6 @@ export const validateForm = (
 
   if (!user.login.trim()) {
     error = "Login is required.";
-    navigation && navigation.navigate(NavRoutes.Registration);
   } else if (user.login.length < 3) {
     error = "Login must be at least 3 characters.";
   }

@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useDispatch } from "react-redux";
 import { styles } from "./LoginScreenStyles";
 import {
   View,
@@ -10,27 +11,33 @@ import {
   Platform,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { UserKeys } from "../../types/auth";
-import { useAppContext } from "../../hooks/useAppContext";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
-import { validateForm } from "./helper";
+import { User } from "./helper";
+import { loginDB } from "../../utils/auth";
+import { initialUserData } from "../../utils/initialData";
 
 const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { setIsAuth, user, setUser } = useAppContext();
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState<User>(initialUserData);
   const [isSecurePass, setIsSecurePass] = useState(true);
 
   const handleChange = (key: UserKeys, value: string) => {
-    setUser({ ...user, [key]: value });
+    setFormData({ ...formData, [key]: value });
   };
 
-  const onLogin = () => {
-    const error = validateForm(user);
-    validateForm(user, navigation)
-      ? alert(error)
-      : (setIsAuth(true), navigation.navigate("Main", user));
+  const onLogin = async () => {
+    try {
+      const { email, password } = formData;
+      await loginDB({ email, password }, dispatch);
+    } catch (err) {
+      Alert.alert("err");
+      console.error("Login error:", err);
+    }
   };
 
   const showButton = (
@@ -57,14 +64,14 @@ const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
 
             <View style={[styles.innerContainer, styles.inputContainer]}>
               <Input
-                value={user.email}
+                value={formData.email}
                 autofocus={true}
                 placeholder="Адреса електронної пошти"
                 onTextChange={(value) => handleChange("email", value)}
               />
 
               <Input
-                value={user.password}
+                value={formData.password}
                 placeholder={"Пароль"}
                 rightButton={showButton}
                 outerStyles={styles.passwordButton}
@@ -84,9 +91,7 @@ const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
                 <Text style={[styles.baseText, styles.passwordButtonText]}>
                   Немає акаунту?
                   <TouchableWithoutFeedback
-                    onPress={() =>
-                      navigation.navigate(NavRoutes.Registration, user)
-                    }
+                    onPress={() => navigation.navigate(NavRoutes.Registration)}
                   >
                     <Text style={styles.signUpText}> Зареєструватися</Text>
                   </TouchableWithoutFeedback>
