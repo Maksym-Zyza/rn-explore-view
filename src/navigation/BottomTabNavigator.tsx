@@ -1,22 +1,17 @@
-import React, { FC } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProfileScreen from "../screens/Profile/ProfileScreen";
 import LogoutButton from "../components/LogoutButton";
 import CreatePostsScreen from "../screens/CreatePosts/CreatePostsScreen";
 import { useAppContext } from "../hooks/useAppContext";
 import TabIcon from "../components/TabIcon";
-import { NavRoutes, NavigatorProps } from "../types/navigation";
+import { NavRoutes } from "../types/navigation";
 import { styles } from "./styles";
 import PostsNavigator from "./PostsNavigator";
 
-const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
-  const { setIsAuth, tabBarShow } = useAppContext();
+const BottomTabNavigator = () => {
+  const { tabBarShow } = useAppContext();
   const Tab = createBottomTabNavigator();
-
-  const onLogout = () => {
-    navigation.navigate(NavRoutes.Auth);
-    setIsAuth(false);
-  };
 
   return (
     <Tab.Navigator
@@ -57,7 +52,7 @@ const BottomTabNavigator: FC<NavigatorProps> = ({ navigation }) => {
         component={ProfileScreen}
         options={() => ({
           title: NavRoutes.Profile,
-          headerRight: () => <LogoutButton onPress={onLogout} />,
+          headerRight: () => <LogoutButton />,
           tabBarIcon: ({ focused }) => (
             <TabIcon active={focused} icon="Profile" />
           ),

@@ -1,3 +1,9 @@
+export type RootState = {
+  user: {
+    userInfo: User;
+  };
+};
+
 export type User = {
   email: string;
   password: string;

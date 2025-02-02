@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import {
   View,
   Text,
@@ -9,26 +9,21 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
 import { UserKeys } from "../../types/auth";
-import { NavRoutes, NavigatorProps } from "../../types/navigation";
-import { useAppContext } from "../../hooks/useAppContext";
+import { NavigatorProps } from "../../types/navigation";
 import { User, validateForm } from "../Login/helper";
 import Avatar from "../../components/Avatar";
 import { registerDB } from "../../utils/auth";
 import { initialUserData } from "../../utils/initialData";
 
 const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { isAuth, user, setUser } = useAppContext();
   const [formData, setFormData] = useState<User>(initialUserData);
   const [isSecurePass, setIsSecurePass] = useState(true);
-
-  useEffect(() => {
-    isAuth ? navigation.navigate(NavRoutes.Auth) : setFormData(user);
-  }, []);
 
   const handleChange = (key: UserKeys, value: string) => {
     setFormData({ ...formData, [key]: value });
@@ -37,12 +32,10 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   const onRegister = () => {
     const error = validateForm(formData);
     if (error) {
-      alert(error);
+      Alert.alert(error);
     } else {
       const { email, password, login, photo } = formData;
       registerDB(email, password, login, photo);
-      setUser(formData);
-      navigation.navigate("Login", user);
     }
   };
 
@@ -106,7 +99,7 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
                 <Text style={[styles.baseText, styles.passwordButtonText]}>
                   Вже є акаунт?
                   <TouchableWithoutFeedback
-                    onPress={() => navigation.navigate("Login", user)}
+                    onPress={() => navigation.navigate("Login")}
                   >
                     <Text style={styles.signUpText}> Увійти</Text>
                   </TouchableWithoutFeedback>

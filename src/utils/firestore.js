@@ -24,7 +24,6 @@ export const addPost = async (userId, post) => {
   }
 };
 
-// Функція для отримання документа з колекції
 export const getUser = async (userId) => {
   const docRef = doc(db, "users", userId);
   const docSnap = await getDoc(docRef);
@@ -38,17 +37,15 @@ export const getUser = async (userId) => {
   }
 };
 
-// Функція для запису даних користувача у Firestore
 export const updateUserInFirestore = async (uid, data) => {
   try {
-    await setDoc(doc(db, "users", uid), data, { merge: true }); // merge: true - для оновлення існуючого документа або створення нового
+    await setDoc(doc(db, "users", uid), data, { merge: true }); // merge: true - update doc
     console.log("User data updated to Firestore:", uid);
   } catch (error) {
     console.error("Error saving user data to Firestore:", error);
   }
 };
 
-// Функція для завантаження зображення
 export const uploadImage = async (userId, file, fileName) => {
   try {
     const imageRef = ref(storage, `profilePhotos/${userId}/${fileName}`);
