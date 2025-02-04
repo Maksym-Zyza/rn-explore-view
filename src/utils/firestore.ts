@@ -1,8 +1,15 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db, storage } from "../../config";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  StorageReference,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
+import { Post } from "../types/posts";
+import { User, UserFB } from "../types/auth";
 
-export const addUser = async (userId, userData) => {
+export const addUser = async (userId: string, userData: UserFB) => {
   try {
     await setDoc(doc(db, "users", userId), userData, { merge: true });
     console.log("User added:", userId);
@@ -11,7 +18,7 @@ export const addUser = async (userId, userData) => {
   }
 };
 
-export const addPost = async (userId, post) => {
+export const addPost = async (userId: string, post: Post) => {
   try {
     await setDoc(
       doc(db, "posts", userId),
@@ -24,7 +31,7 @@ export const addPost = async (userId, post) => {
   }
 };
 
-export const getUser = async (userId) => {
+export const getUser = async (userId: string) => {
   const docRef = doc(db, "users", userId);
   const docSnap = await getDoc(docRef);
 
@@ -37,7 +44,7 @@ export const getUser = async (userId) => {
   }
 };
 
-export const updateUserInFirestore = async (uid, data) => {
+export const updateUserInFirestore = async (uid: string, data: any) => {
   try {
     await setDoc(doc(db, "users", uid), data, { merge: true }); // merge: true - update doc
     console.log("User data updated to Firestore:", uid);
@@ -46,7 +53,11 @@ export const updateUserInFirestore = async (uid, data) => {
   }
 };
 
-export const uploadImage = async (userId, file, fileName) => {
+export const uploadImage = async (
+  userId: string,
+  file: Blob,
+  fileName: string
+) => {
   try {
     const imageRef = ref(storage, `profilePhotos/${userId}/${fileName}`);
     const result = await uploadBytes(imageRef, file);
@@ -60,7 +71,8 @@ export const uploadImage = async (userId, file, fileName) => {
   }
 };
 
-export const getImageUrl = async (imageRef) => {
-  const url = await getDownloadURL(imageRef);
-  return url;
+export const getImageUrl = async (
+  imageRef: StorageReference
+): Promise<string> => {
+  return await getDownloadURL(imageRef);
 };

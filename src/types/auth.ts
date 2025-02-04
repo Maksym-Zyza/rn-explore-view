@@ -26,3 +26,10 @@ export type ImgData = {
   displayName: string;
   photoURL: string;
 };
+
+export type UserFB = {
+  uid: string;
+  email: string | null;
+  login: string;
+  photo: string;
+};
