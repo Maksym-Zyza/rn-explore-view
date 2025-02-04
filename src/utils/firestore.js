@@ -60,7 +60,6 @@ export const uploadImage = async (userId, file, fileName) => {
   }
 };
 
-// Функція для отримання URL завантаженого зображення
 export const getImageUrl = async (imageRef) => {
   const url = await getDownloadURL(imageRef);
   return url;

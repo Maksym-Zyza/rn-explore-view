@@ -1,8 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { PostKey } from "../types/posts";
-import { UserKeys } from "../types/auth";
 
 type Props = {
   setPhoto: (key: "photo", value: string) => void;

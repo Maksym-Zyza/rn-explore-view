@@ -14,15 +14,16 @@ import {
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { styles } from "./RegistrationScreenStyles";
-import { UserKeys } from "../../types/auth";
+import { User, UserKeys } from "../../types/auth";
 import { NavigatorProps } from "../../types/navigation";
-import { User, validateForm } from "../Login/helper";
+import { validateForm } from "../Login/helper";
 import Avatar from "../../components/Avatar";
 import { registerDB } from "../../utils/auth";
 import { initialUserData } from "../../utils/initialData";
 
 const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   const [formData, setFormData] = useState<User>(initialUserData);
+  const [error, setError] = useState("");
   const [isSecurePass, setIsSecurePass] = useState(true);
 
   const handleChange = (key: UserKeys, value: string) => {
@@ -30,13 +31,12 @@ const RegistrationScreen: FC<NavigatorProps> = ({ navigation }) => {
   };
 
   const onRegister = () => {
-    const error = validateForm(formData);
-    if (error) {
-      Alert.alert(error);
-    } else {
-      const { email, password, login, photo } = formData;
-      registerDB(email, password, login, photo);
-    }
+    const validationError = validateForm(formData);
+    validationError
+      ? Alert.alert(validationError)
+      : registerDB(formData, setError);
+
+    error && Alert.alert(error);
   };
 
   const showButton = (
