@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 type Props = {
   setPhoto: (key: "photo", value: string) => void;
   children: ReactNode;
+  // setSelectedImg?: ()
 };
 
 const ImagePiker: FC<Props> = ({ children, setPhoto }) => {
@@ -19,7 +20,7 @@ const ImagePiker: FC<Props> = ({ children, setPhoto }) => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
       allowsEditing: false,
-      quality: 1,
+      quality: 0.3,
     });
 
     if (!result.canceled) {
