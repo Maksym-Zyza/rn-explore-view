@@ -16,7 +16,11 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.maksymzyza.rn-explore-view",
       "infoPlist": {
-        "UIBackgroundModes": ["location", "fetch", "remote-notification"],
+        "UIBackgroundModes": [
+          "location",
+          "fetch",
+          "remote-notification"
+        ],
         "NSLocationWhenInUseUsageDescription": "This app requires access to your location when open.",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app requires access to your location even when closed.",
         "NSLocationAlwaysUsageDescription": "This app requires access to your location when open.",
@@ -34,10 +38,15 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.maksymzyza.rn-explore-view"
+      "package": "com.mmziza.RN01"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "02e25fbb-4ada-448f-b8a4-63fcd893428b"
+      }
     }
   }
 }
