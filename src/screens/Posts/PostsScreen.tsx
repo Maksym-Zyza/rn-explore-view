@@ -1,16 +1,32 @@
-import { FC } from "react";
+import { FC, useCallback, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import { colors } from "../../styles/global";
 import { styles } from "./PostsScreenStyles";
-import { useAppContext } from "../../hooks/useAppContext";
 import Placeholder from "../../components/Placeholder";
 import { AVATAR_IMG } from "../../variables";
+import { getPosts } from "../../utils/firestore";
+import { useSelector } from "react-redux";
+import { RootState } from "../../types/auth";
+import { PostFB } from "../../types/posts";
+import { useFocusEffect } from "@react-navigation/native";
 
 const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { user, posts } = useAppContext();
+  const user = useSelector((state: RootState) => state.user.userInfo);
+  const [posts, setPosts] = useState<PostFB[]>([]);
+
+  const getPostsData = async () => {
+    const postsData = await getPosts(user.uid);
+    setPosts(postsData);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getPostsData();
+    }, [])
+  );
 
   return (
     <View style={styles.postsContainer}>
@@ -40,7 +56,9 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
           ItemSeparatorComponent={() => <View style={{ height: 34 }}></View>}
           renderItem={({ item }) => (
             <View>
-              <Image style={styles.postPhoto} source={{ uri: item.photo }} />
+              {item?.photo && (
+                <Image style={styles.postPhoto} source={{ uri: item.photo }} />
+              )}
               <Text style={styles.postTitle}>{item.title}</Text>
               <View
                 style={{
@@ -63,8 +81,8 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate(NavRoutes.Map, {
-                      latitude: item.coords?.latitude,
-                      longitude: item.coords?.longitude,
+                      latitude: item.location?.latitude,
+                      longitude: item.location?.longitude,
                     })
                   }
                   style={{ flexDirection: "row", alignItems: "center" }}

@@ -1,4 +1,13 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { db, storage } from "../../config";
 import {
   StorageReference,
@@ -6,7 +15,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { PostReq } from "../types/posts";
+import { PostFB } from "../types/posts";
 import { UserFB } from "../types/auth";
 
 export const addUser = async (userId: string, userData: UserFB) => {
@@ -18,23 +27,15 @@ export const addUser = async (userId: string, userData: UserFB) => {
   }
 };
 
-export const addPost = async (userId: string, post: PostReq) => {
+export const addPost = async (userId: string, post: any) => {
   try {
-    await setDoc(doc(db, "posts", userId), post, { merge: true });
-    console.log("Post added:", userId);
+    const postRef = doc(collection(db, "posts"));
+    await setDoc(postRef, { ...post, userId }, { merge: true });
+    console.log("Post added:", postRef.id);
   } catch (error) {
     console.error("Error adding post:", error);
   }
 };
-
-// const uploadPostToServer = async (post: PostReq) => {
-//   try {
-//     await addDoc(collection(db, "posts"), post);
-//     console.log("Post saved to Server!");
-//   } catch (error: any) {
-//     setErrorMsg(error?.message ?? "Error uploading post");
-//   }
-// };
 
 export const getUser = async (userId: string) => {
   const docRef = doc(db, "users", userId);
@@ -49,16 +50,29 @@ export const getUser = async (userId: string) => {
   }
 };
 
-export const getPosts = async (id: string) => {
-  const docRef = doc(db, "posts", id);
-  const docSnap = await getDoc(docRef);
+export const getPosts = async (userId: string) => {
+  const postsRef = collection(db, "posts");
+  const q = query(postsRef, where("userId", "==", userId));
+  const querySnapshot = await getDocs(q);
 
-  if (docSnap.exists()) {
-    console.log("Post data:", docSnap.data());
-    return docSnap.data();
+  if (!querySnapshot.empty) {
+    const postsData: DocumentData[] = querySnapshot.docs.map((doc) =>
+      doc.data()
+    );
+
+    const posts: PostFB[] = postsData.map((docData) => ({
+      id: docData.id,
+      title: docData.title,
+      place: docData.place,
+      location: docData.location,
+      photo: docData.photo,
+    }));
+
+    console.log("Posts data:", posts);
+    return posts;
   } else {
-    console.log("No such document!");
-    return null;
+    console.log("No posts found!");
+    return [];
   }
 };
 

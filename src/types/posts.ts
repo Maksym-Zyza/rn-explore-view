@@ -7,7 +7,7 @@ export type Post = {
   coords?: Coords;
 };
 
-export type PostReq = {
+export type PostFB = {
   id: string;
   photo?: string | null;
   title: string;

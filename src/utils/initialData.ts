@@ -4,3 +4,9 @@ export const initialUserData = {
   password: "",
   photo: "",
 };
+
+export const initialPostData = {
+  photo: "",
+  title: "",
+  place: "",
+};

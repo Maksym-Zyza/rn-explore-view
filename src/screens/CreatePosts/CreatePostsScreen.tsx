@@ -24,14 +24,14 @@ import { RootState } from "../../types/auth";
 import { uploadImageToStorage } from "./helper";
 import { addPost } from "../../utils/firestore";
 import { nanoid } from "@reduxjs/toolkit";
+import { initialPostData } from "../../utils/initialData";
 
 const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
   const { permission, requestPermission } = useCameraPermission();
   const user = useSelector((state: RootState) => state.user.userInfo);
 
-  const initialPost = { photo: "", title: "", place: "" };
-  const [post, setPost] = useState<Post>(initialPost);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [post, setPost] = useState<Post>(initialPostData);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -75,7 +75,7 @@ const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
   };
 
   const onReset = () => {
-    setPost(initialPost);
+    setPost(initialPostData);
   };
 
   return (
@@ -140,7 +140,14 @@ const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
+
+          {errorMsg && (
+            <Text style={{ color: colors.orange, padding: 12 }}>
+              {errorMsg}
+            </Text>
+          )}
         </View>
+
         <View style={styles.resetBtn}>
           <TouchableOpacity style={styles.resetBtn} onPress={onReset}>
             <Feather name="trash-2" size={24} color={colors.text_gray} />

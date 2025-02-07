@@ -22,7 +22,10 @@ const BottomTabNavigator = () => {
         headerLeftContainerStyle: { paddingLeft: "4%" },
         headerStyle: styles.tabHeader,
         headerTitleStyle: styles.tabHeaderTitle,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: {
+          ...styles.tabBar,
+          display: tabBarShow ? "flex" : "none",
+        },
         tabBarItemStyle: styles.tabIcon,
         tabBarShowLabel: false,
       })}
@@ -33,7 +36,6 @@ const BottomTabNavigator = () => {
         options={() => ({
           tabBarLabel: NavRoutes.Posts,
           headerShown: false,
-          tabBarStyle: { display: tabBarShow ? "flex" : "none" },
           tabBarIcon: ({ focused }) => (
             <TabIcon active={focused} icon="Posts" />
           ),

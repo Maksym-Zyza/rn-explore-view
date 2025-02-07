@@ -12,17 +12,14 @@ import { ImgData, LoginData, User } from "../types/auth";
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
 export const registerDB = async (
-  user: User,
+  { email, password, login, photo }: User,
   setError: (state: string) => void
 ) => {
-  const { email, password, login, photo } = user;
   try {
     const credentials = await createUserWithEmailAndPassword(
       auth,
       email,
-      password,
-      login,
-      photo
+      password
     );
 
     const user = credentials.user;
