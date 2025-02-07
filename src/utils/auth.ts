@@ -8,26 +8,34 @@ import {
 import { auth } from "../../config";
 import { setUserInfo, clearUserInfo } from "../redux/reducers/userSlice";
 import { addUser, getUser } from "./firestore";
+import { ImgData, LoginData, User } from "../types/auth";
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
-export const registerDB = async (email, password, login, photo) => {
+export const registerDB = async (
+  { email, password, login, photo }: User,
+  setError: (state: string) => void
+) => {
   try {
     const credentials = await createUserWithEmailAndPassword(
       auth,
       email,
-      password,
-      login,
-      photo
+      password
     );
 
     const user = credentials.user;
 
     await addUser(user.uid, { uid: user.uid, email: user.email, login, photo });
   } catch (error) {
-    console.log("SIGNUP ERROR:", error);
+    setError(`${error}` || "Firebase error");
   }
 };
 
-export const loginDB = async ({ email, password }, dispatch) => {
+export const loginDB = async (
+  user: LoginData,
+  dispatch: Dispatch<UnknownAction>,
+  setError: (state: string) => void
+) => {
+  const { email, password } = user;
   try {
     const credentials = await signInWithEmailAndPassword(auth, email, password);
     console.log(credentials);
@@ -43,11 +51,11 @@ export const loginDB = async ({ email, password }, dispatch) => {
     );
     return user;
   } catch (error) {
-    console.log(error);
+    setError(`${error}` || "Firebase error");
   }
 };
 
-export const logoutDB = async (dispatch) => {
+export const logoutDB = async (dispatch: Dispatch<UnknownAction>) => {
   try {
     await signOut(auth);
     dispatch(clearUserInfo());
@@ -56,7 +64,7 @@ export const logoutDB = async (dispatch) => {
   }
 };
 
-export const authStateChanged = (dispatch) => {
+export const authStateChanged = (dispatch: Dispatch<UnknownAction>) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const userData = await getUser(user.uid);
@@ -74,7 +82,7 @@ export const authStateChanged = (dispatch) => {
   });
 };
 
-export const updateUserProfile = async (update) => {
+export const updateUserProfile = async (update: ImgData) => {
   const user = auth.currentUser;
   if (user) {
     try {

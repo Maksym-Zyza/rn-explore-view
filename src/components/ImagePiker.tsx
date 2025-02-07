@@ -1,12 +1,11 @@
 import React, { FC, ReactNode } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { PostKey } from "../types/posts";
-import { UserKeys } from "../types/auth";
 
 type Props = {
   setPhoto: (key: "photo", value: string) => void;
   children: ReactNode;
+  // setSelectedImg?: ()
 };
 
 const ImagePiker: FC<Props> = ({ children, setPhoto }) => {
@@ -21,7 +20,7 @@ const ImagePiker: FC<Props> = ({ children, setPhoto }) => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "images",
       allowsEditing: false,
-      quality: 1,
+      quality: 0.3,
     });
 
     if (!result.canceled) {

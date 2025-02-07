@@ -1,14 +1,8 @@
-import { NavRoutes, NavigationProps } from "../../types/navigation";
+import { User } from "../../types/auth";
 
-export type User = {
-  email: string;
-  password: string;
-  login: string;
-  photo: string;
-};
-
-export const validateForm = (user: User): string => {
+export const validateForm = (user: User, isLogin?: boolean): string => {
   let error = "";
+  const { email, password, login } = user;
 
   if (!user.password.trim()) {
     error = "Password is required.";

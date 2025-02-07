@@ -15,29 +15,24 @@ import {
 } from "react-native";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
-import { UserKeys } from "../../types/auth";
+import { LoginData, UserKeys } from "../../types/auth";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
-import { User } from "./helper";
 import { loginDB } from "../../utils/auth";
 import { initialUserData } from "../../utils/initialData";
 
 const LoginScreen: FC<NavigatorProps> = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState<User>(initialUserData);
+  const [formData, setFormData] = useState<LoginData>(initialUserData);
+  const [error, setError] = useState("");
   const [isSecurePass, setIsSecurePass] = useState(true);
 
   const handleChange = (key: UserKeys, value: string) => {
     setFormData({ ...formData, [key]: value });
   };
 
-  const onLogin = async () => {
-    try {
-      const { email, password } = formData;
-      await loginDB({ email, password }, dispatch);
-    } catch (err) {
-      Alert.alert("err");
-      console.error("Login error:", err);
-    }
+  const onLogin = () => {
+    loginDB(formData, dispatch, setError);
+    error && Alert.alert(error);
   };
 
   const showButton = (

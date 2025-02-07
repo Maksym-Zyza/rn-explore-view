@@ -8,7 +8,7 @@ const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API,
   authDomain: "exploreview-589ec.firebaseapp.com",
   projectId: "exploreview-589ec",
-  storageBucket: "exploreview-589ec.appspot.com",
+  storageBucket: "gs://exploreview-589ec.firebasestorage.app",
 };
 
 const app = initializeApp(firebaseConfig);
