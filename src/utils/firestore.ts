@@ -6,8 +6,8 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { Post, PostReq } from "../types/posts";
-import { User, UserFB } from "../types/auth";
+import { PostReq } from "../types/posts";
+import { UserFB } from "../types/auth";
 
 export const addUser = async (userId: string, userData: UserFB) => {
   try {
@@ -26,6 +26,15 @@ export const addPost = async (userId: string, post: PostReq) => {
     console.error("Error adding post:", error);
   }
 };
+
+// const uploadPostToServer = async (post: PostReq) => {
+//   try {
+//     await addDoc(collection(db, "posts"), post);
+//     console.log("Post saved to Server!");
+//   } catch (error: any) {
+//     setErrorMsg(error?.message ?? "Error uploading post");
+//   }
+// };
 
 export const getUser = async (userId: string) => {
   const docRef = doc(db, "users", userId);

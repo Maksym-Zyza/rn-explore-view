@@ -16,14 +16,14 @@ import { styles } from "./CreatePostsScreenStyles";
 import { colors } from "../../styles/global";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import ImagePiker from "../../components/ImagePiker";
-import { Coords, Post, PostKey } from "../../types/posts";
+import { Post, PostKey } from "../../types/posts";
 import Camera from "../../components/Camera";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
 import { useSelector } from "react-redux";
 import { RootState } from "../../types/auth";
 import { uploadImageToStorage } from "./helper";
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../config";
+import { addPost } from "../../utils/firestore";
+import { nanoid } from "@reduxjs/toolkit";
 
 const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
   const { permission, requestPermission } = useCameraPermission();
@@ -58,30 +58,24 @@ const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
     const { latitude, longitude } = location.coords;
     const coords = { latitude, longitude };
 
-    await uploadPostToServer(coords);
+    const photo = await uploadImageToStorage(post.photo, user.uid);
+
+    const newPost = {
+      photo,
+      title: post.title,
+      place: post.place,
+      location: coords,
+      id: nanoid(),
+      userId: user.uid,
+    };
+
+    await addPost(user.uid, newPost);
     navigation.navigate(NavRoutes.Posts);
     onReset();
   };
 
   const onReset = () => {
     setPost(initialPost);
-  };
-
-  const uploadPostToServer = async (location: Coords) => {
-    const photo = await uploadImageToStorage(post.photo, user.uid);
-    const newPost = {
-      photo,
-      title: post.title,
-      place: post.place,
-      location,
-      uid: user.uid,
-    };
-    try {
-      await addDoc(collection(db, "posts"), newPost);
-      console.log("Post saved to Server!");
-    } catch (error: any) {
-      setErrorMsg(error?.message ?? "Error uploading post");
-    }
   };
 
   return (
