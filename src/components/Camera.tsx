@@ -98,8 +98,6 @@ const styles = StyleSheet.create({
     height: 240,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.border_gray,
-    backgroundColor: colors.black_primary,
     marginBottom: 8,
     overflow: "hidden",
   },
@@ -112,12 +110,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   takePhotoContainer: {
-    position: "absolute",
-    top: 10,
-    left: 10,
-    borderColor: colors.white,
-    borderWidth: 1,
-    borderRadius: 10,
+    ...StyleSheet.absoluteFillObject,
+    zIndex: -1,
   },
   photoBtnContainer: {
     position: "absolute",

@@ -53,7 +53,7 @@ const PostsScreen: FC<NavigatorProps> = ({ navigation }) => {
         <FlatList
           data={posts}
           keyExtractor={(item, indx) => indx.toString()}
-          ItemSeparatorComponent={() => <View style={{ height: 34 }}></View>}
+          ItemSeparatorComponent={() => <View style={{ height: 24 }}></View>}
           renderItem={({ item }) => (
             <View>
               {item?.photo && (

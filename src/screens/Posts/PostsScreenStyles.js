@@ -1,17 +1,12 @@
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { colors } from "../../styles/global";
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "flex-end",
-  },
   postsContainer: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingTop: 32,
-    paddingBottom: 34,
+    paddingTop: 16,
+    paddingBottom: 84,
     backgroundColor: colors.white,
   },
   postPhoto: {
@@ -33,7 +28,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    marginBottom: 32,
+    marginBottom: 16,
   },
   avatarPhoto: {
     width: 60,
