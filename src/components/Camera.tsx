@@ -63,6 +63,7 @@ const Camera: FC<Props> = ({
             <Image style={styles.camera} source={{ uri }} />
           </View>
         )}
+
         <TouchableOpacity
           style={{
             ...styles.photoBtnContainer,

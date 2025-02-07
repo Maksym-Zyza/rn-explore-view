@@ -16,14 +16,18 @@ import { styles } from "./CreatePostsScreenStyles";
 import { colors } from "../../styles/global";
 import { NavRoutes, NavigatorProps } from "../../types/navigation";
 import ImagePiker from "../../components/ImagePiker";
-import { useAppContext } from "../../hooks/useAppContext";
-import { Post, PostKey } from "../../types/posts";
+import { Coords, Post, PostKey } from "../../types/posts";
 import Camera from "../../components/Camera";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
+import { useSelector } from "react-redux";
+import { RootState } from "../../types/auth";
+import { uploadImageToStorage } from "./helper";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../../config";
 
 const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
-  const { posts, setPosts } = useAppContext();
   const { permission, requestPermission } = useCameraPermission();
+  const user = useSelector((state: RootState) => state.user.userInfo);
 
   const initialPost = { photo: "", title: "", place: "" };
   const [post, setPost] = useState<Post>(initialPost);
@@ -51,19 +55,33 @@ const CreatePostsScreen: FC<NavigatorProps> = ({ navigation }) => {
 
   const onSubmit = async () => {
     const location = await Location.getCurrentPositionAsync({});
-    const coords = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-    };
+    const { latitude, longitude } = location.coords;
+    const coords = { latitude, longitude };
 
-    const newPost = { ...post, coords };
-    setPosts([...posts, newPost]);
+    await uploadPostToServer(coords);
     navigation.navigate(NavRoutes.Posts);
     onReset();
   };
 
-  const onReset = async () => {
+  const onReset = () => {
     setPost(initialPost);
+  };
+
+  const uploadPostToServer = async (location: Coords) => {
+    const photo = await uploadImageToStorage(post.photo, user.uid);
+    const newPost = {
+      photo,
+      title: post.title,
+      place: post.place,
+      location,
+      uid: user.uid,
+    };
+    try {
+      await addDoc(collection(db, "posts"), newPost);
+      console.log("Post saved to Server!");
+    } catch (error: any) {
+      setErrorMsg(error?.message ?? "Error uploading post");
+    }
   };
 
   return (

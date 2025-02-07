@@ -1,6 +1,6 @@
 export type RootState = {
   user: {
-    userInfo: User;
+    userInfo: UserFB;
   };
 };
 

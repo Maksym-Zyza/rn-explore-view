@@ -6,7 +6,7 @@ import {
   ref,
   uploadBytes,
 } from "firebase/storage";
-import { Post } from "../types/posts";
+import { Post, PostReq } from "../types/posts";
 import { User, UserFB } from "../types/auth";
 
 export const addUser = async (userId: string, userData: UserFB) => {
@@ -18,13 +18,9 @@ export const addUser = async (userId: string, userData: UserFB) => {
   }
 };
 
-export const addPost = async (userId: string, post: Post) => {
+export const addPost = async (userId: string, post: PostReq) => {
   try {
-    await setDoc(
-      doc(db, "posts", userId),
-      { userId, posts: [post] },
-      { merge: true }
-    );
+    await setDoc(doc(db, "posts", userId), post, { merge: true });
     console.log("Post added:", userId);
   } catch (error) {
     console.error("Error adding post:", error);
@@ -44,6 +40,19 @@ export const getUser = async (userId: string) => {
   }
 };
 
+export const getPosts = async (id: string) => {
+  const docRef = doc(db, "posts", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    console.log("Post data:", docSnap.data());
+    return docSnap.data();
+  } else {
+    console.log("No such document!");
+    return null;
+  }
+};
+
 export const updateUserInFirestore = async (uid: string, data: any) => {
   try {
     await setDoc(doc(db, "users", uid), data, { merge: true }); // merge: true - update doc
@@ -53,7 +62,7 @@ export const updateUserInFirestore = async (uid: string, data: any) => {
   }
 };
 
-export const uploadImage = async (
+export const uploadProfileImage = async (
   userId: string,
   file: Blob,
   fileName: string
@@ -64,6 +73,23 @@ export const uploadImage = async (
 
     const imageUrl = await getImageUrl(imageRef);
     console.log("Upload result:", result);
+    return imageUrl;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
+  }
+};
+
+export const uploadImage = async (
+  userId: string,
+  file: Blob,
+  fileName: string
+) => {
+  try {
+    const imageRef = ref(storage, `postPhotos/${userId}/${fileName}`);
+    const result = await uploadBytes(imageRef, file);
+    const imageUrl = await getImageUrl(imageRef);
+    console.log("imageUrl:", imageUrl);
     return imageUrl;
   } catch (error) {
     console.error("Error uploading image:", error);
